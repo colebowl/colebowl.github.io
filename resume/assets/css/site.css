@@ -1,0 +1,35 @@
+#web-development-graphs.section-content {
+	margin-top: 0px;
+}
+
+.employer{
+	display: block;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	margin-top: 10px;
+	color: #e76270;
+}
+
+.employer a{
+	text-decoration: none;
+}
+
+.employer a:hover {
+	text-decoration: underline;
+}
+
+#contact {
+	background-color: #0d2c5a;
+	height: 60px;
+	color: #fff;
+}
+.contact-info a{
+	text-decoration: none;
+	color: #e76270 !important;
+	/*text-transform: none;*/
+}
+
+.contact-info a:hover {
+	text-decoration: underline;
+	}
