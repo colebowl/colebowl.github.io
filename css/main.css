@@ -7,37 +7,38 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
 
-html { -webkit-font-smoothing: antialiased; }
+html { -webkit-font-smoothing: antialiased;   box-sizing: border-box; }
 
 body {
-    padding-top: 22%;
+    padding-top: 10%;
     padding-bottom: 20px;
+    font-family: 'Lato', sans-serif;
 }
 
 h1 {
-	font-family: 'Lato', sans-serif;
+	
 	font-weight: 300;
 	font-size: 62px;
-	color: white;
+	color: #222222;
 	opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
 }
 
 h1#my-name { margin-bottom: 25px;}
 h2 {
-	font-family: 'Lato', sans-serif;
+	
 	font-weight: 300;
 	font-size: 35px;
-	color: white;
+	color: #222222;
 	opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
 }
 
 h3 {
-	font-family: 'Lato', sans-serif;
+	
 	font-weight: 300;
 	font-size: 25px;
-	color: white;
+	color: #222222;
 	opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
 }
@@ -45,32 +46,37 @@ h3 {
 
 
 h4 {
-	font-family: 'Lato', sans-serif;
+	
 	font-weight: 300;
 	font-size: 25px;
-	color: white;
+	color: #222222;
 	opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
 }
 
 
-#networks {
-	margin-top: 30px;
+.links 
+{
+	margin-top: 45px;
+}
+
+.links hr{
+    width: 10%;
+ 
+    border-bottom: 1px solid #ccc;
 }
 .network {
 	padding: 15px;
-	margin:-1px;
+	font-size: 22px;
 }
 
 .network:hover {
-	border: solid white 1px;
-		opacity: 0.8;
-    filter: alpha(opacity=80); /* For IE8 and earlier */
+	text-decoration: underline;
 }
 
 
 a,a:hover  {
-	color: white;
+	color: #222222;
 	text-decoration: none;
 }
 
