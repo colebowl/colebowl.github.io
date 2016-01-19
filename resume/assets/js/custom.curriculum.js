@@ -38,13 +38,13 @@ jQuery( document ).ready( function( $ ){
 		}
 	});
 
-	// Portfolio sorter initialization
-	$( '.projects' ).mixitup( {
-		targetSelector: '.project',	// Class required on each portfolio item
-		filterSelector: '.filter', // Class required on each filter link
-		effects: ['rotateZ'],
-		easing: 'snap'
-	} );
+	// // Portfolio sorter initialization
+	// $( '.projects' ).mixitup( {
+	// 	targetSelector: '.project',	// Class required on each portfolio item
+	// 	filterSelector: '.filter', // Class required on each filter link
+	// 	effects: ['rotateZ'],
+	// 	easing: 'snap'
+	// } );
 
 	// Portfolio items zoom / popover
 	$( '.image-popup' ).magnificPopup( {type: 'image' } );
