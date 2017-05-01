@@ -1,0 +1,114 @@
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+@import url(https://fonts.googleapis.com/css?family=Average);
+/* line 9, ../sass/main.scss */
+body {
+  background: #efefef;
+  font-family: "Average", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 15, ../sass/main.scss */
+p, a, span {
+  font-family: "Average", serif;
+  font-size: 1em;
+}
+
+/* line 20, ../sass/main.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Fjalla One", sans-serif;
+}
+
+/* line 25, ../sass/main.scss */
+.hover-fade {
+  background-color: black;
+  color: blue;
+  /* First we need to help some browsers along for this to work.
+     Just because a vendor prefix is there, doesn't mean it will
+     work in a browser made by that vendor either, it's just for
+     future-proofing purposes I guess. */
+  transition: opacity 500ms ease-out;
+  -webkit-transition: opacity 500ms ease-out;
+  -moz-transition: opacity 500ms ease-out;
+  -o-transition: opacity 500ms ease-out;
+  position: relative;
+  overflow: hidden;
+}
+/* line 36, ../sass/main.scss */
+.hover-fade:hover {
+  opacity: .5;
+}
+
+/* line 43, ../sass/main.scss */
+.overlay {
+  position: absolute;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  opacity: 0;
+  top: 0;
+  left: 0;
+}
+
+/* line 55, ../sass/main.scss */
+#banner {
+  background: red;
+  height: 100vh;
+  background: url(../images/lake-ohara-mountain-banner.jpg) center no-repeat;
+  position: relative;
+}
+/* line 61, ../sass/main.scss */
+#banner .content {
+  color: #fff;
+  min-height: 20px;
+  position: absolute;
+  bottom: 10vh;
+  padding-left: 30px;
+}
+@media screen and (min-width: 48em) {
+  /* line 61, ../sass/main.scss */
+  #banner .content {
+    bottom: 10vh;
+    padding-left: 100px;
+    text-align: left;
+  }
+  /* line 74, ../sass/main.scss */
+  #banner .content h1 {
+    font-size: 22px;
+  }
+}
+/* line 80, ../sass/main.scss */
+#banner .byline {
+  font-size: 18px;
+}
+
+/* line 86, ../sass/main.scss */
+#footer {
+  padding: 10px 50px;
+  color: #fff;
+  background: #000;
+}
+
+/* line 93, ../sass/main.scss */
+.social-block {
+  text-align: center;
+  overflow: hidden;
+}
+/* line 97, ../sass/main.scss */
+.social-block .icon {
+  margin-top: 20%;
+}
+@media screen and (min-width: 48em) {
+  /* line 97, ../sass/main.scss */
+  .social-block .icon {
+    margin-top: 40%;
+  }
+}
+/* line 105, ../sass/main.scss */
+.social-block h3 {
+  margin-top: 10px;
+}
+
+/* line 110, ../sass/main.scss */
+.about-block {
+  padding: 50px;
+}

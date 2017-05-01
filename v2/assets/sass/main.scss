@@ -1,0 +1,113 @@
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+@import url(https://fonts.googleapis.com/css?family=Average);
+
+$heading-font: 'Fjalla One', sans-serif;
+$body-font: 'Average', serif;
+
+$row-height: 400px;
+
+body {
+	background: #efefef;
+	font-family: $body-font;
+	-webkit-font-smoothing: antialiased;
+}
+
+p, a, span {
+	font-family: $body-font;
+	font-size: 1em;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: $heading-font;
+}
+
+
+.hover-fade {
+	background-color: black;
+  	color:blue;
+  /* First we need to help some browsers along for this to work.
+     Just because a vendor prefix is there, doesn't mean it will
+     work in a browser made by that vendor either, it's just for
+     future-proofing purposes I guess. */
+	transition : opacity 500ms ease-out; 
+	-webkit-transition : opacity 500ms ease-out; 
+	-moz-transition : opacity 500ms ease-out;
+	-o-transition : opacity 500ms ease-out; 
+	&:hover { opacity:.5; }
+	position: relative;
+	overflow: hidden;
+
+
+}
+
+	.overlay {
+		// display: block;
+		position: absolute;
+		z-index: 20;
+		background: rgba(0, 0, 0, 0.8);
+		overflow: hidden;
+		opacity: 0;
+		top: 0;
+		left: 0;
+	}
+	// &:hover { opacity:1; }
+
+#banner	{
+	background: red;
+	height: 100vh;
+	background: url(../images/lake-ohara-mountain-banner.jpg) center no-repeat;
+	position: relative;
+	
+	.content	{
+		// width: 100%;
+		color: #fff;
+		min-height: 20px;
+
+		position: absolute;
+		bottom: 10vh; 
+		padding-left: 30px;		
+
+		@media screen and (min-width: 48em)	{
+			bottom: 10vh;
+			padding-left: 100px;
+			text-align: left; 
+			h1 {
+				font-size: 22px;
+			}
+		}
+	}
+
+	.byline {
+		font-size: 18px; 
+	}
+
+}
+
+#footer {
+	padding: 10px 50px;
+	color: #fff;
+	background: #000;
+
+}
+
+.social-block {
+	text-align: center;
+	overflow: hidden;
+	
+	.icon {
+		
+		margin-top: 20%;		
+		@media screen and (min-width: 48em)	{
+			margin-top: 40%;			
+		}
+		
+	}
+	h3 {
+		margin-top: 10px;
+	}
+}
+
+.about-block {
+	padding: 50px;
+}
+
