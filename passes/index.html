@@ -36,17 +36,41 @@
   		$(document).ready(function() {
   				const totalDays = 20;
   		    const venues = [
+            {
+              name: "Early Season Sunshine Adult Pass ($1200)",
+              dayPrice: 109,
+              seasonsPass: 998,
+              type: "resort"
+            },
+            {
+              name: "Early Season  Sunshine Costco Card (229.99)",
+              dayPrice: 109,
+              discountedDayPrice: 76.63,
+              seasonsPass: 998,
+              type: "costco"
+            },
+            {
+              name: "Early Season Sunshine Card ($99)",
+              dayPrice: 109,
+              discountedWeekDayPrice: Number(109 - 25),
+              discountedWeekEndPrice: Number(109 - 15),
+              seasonsPass: 998,
+              cardPrice: 99,
+              freeDays: [1, 4, 7],
+              type: "venueCard"
+            },
+
     		    {
     		    	name: "Sunshine Adult Pass ($1200)",
     		    	dayPrice: 109,
-    		    	seasonsPass: 1200,
+    		    	seasonsPass: 1365,
               type: "resort"
     		    },
             {
               name: "Sunshine Costco Card (229.99)",
               dayPrice: 109,
               discountedDayPrice: 76.63,
-              seasonsPass: 1200,
+              seasonsPass: 1365,
               type: "costco"
             },
             {
@@ -54,7 +78,7 @@
               dayPrice: 109,
               discountedWeekDayPrice: Number(109 - 25),
               discountedWeekEndPrice: Number(109 - 15),
-              seasonsPass: 1200,
+              seasonsPass: 1365,
               cardPrice: 99,
               freeDays: [1, 4, 7],
               type: "venueCard"
