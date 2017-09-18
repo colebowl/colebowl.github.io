@@ -64,7 +64,7 @@
           const calculateResortSeasonsPassPrices = (venue, days) => {
             return _.map(_.range(days), day => {
               return {
-                price: (venue.seasonsPass / (day+1)).toFixed(2),
+                price: venue.dayPrice,
                 isBetterValue: venue.dayPrice > (venue.seasonsPass / (day+1)).toFixed(2),
                 totalSpent: venue.seasonsPass
               }
@@ -74,9 +74,9 @@
           const calculateCostoCardPrices = (venue, days) => {
             return _.map(_.range(days), day => {
               return {
-                price: venue.dayPrice,
-                isBetterValue: Number(day+1) * venue.dayPrice < venue.seasonsPass,
-                totalSpent: venue.dayPrice * Number(day+1)
+                price: venue.discountedDayPrice,
+                isBetterValue: Number(day+1) * venue.discountedDayPrice < venue.seasonsPass,
+                totalSpent: venue.discountedDayPrice * Number(day+1)
               }
             });
           }
@@ -115,7 +115,7 @@
   		    _.map(venues, venue => {
 
               let prices;
-              
+              console.log('',venue.type);
               switch (venue.type) {
                 case "resort":
                   prices = calculateResortSeasonsPassPrices(venue, totalDays);
@@ -136,7 +136,7 @@
     		    			${_.map(prices, (price, i) => {
                     return `
                       <td>
-                        <span class="price">Better Than SP - ${price.isBetterValue ? "Yes" : "No"}</span> 
+                        <span class="price">Better Than ${venue.type === "resort" ? "DP" : "SP"} - ${price.isBetterValue ? "Yes" : "No"}</span> 
                         <br>$/Pass: $${price.price}
                         <br>Total Spend: $${price.totalSpent}
                         ${venue.type === "venueCard" ? `<br>${price.isFreeDay ? "Free Day" : '&nbsp;'}` : ''}
