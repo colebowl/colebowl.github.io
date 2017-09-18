@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+    * {
+      font-size: 14px;
+      
+    }
+    /*.price {font-size: 17px;}*/
+		table { width: 3000px;}
+
+		td,th {  }
+    th {text-align: center;}
+
+    .container { overflow: auto; max-width: 100%; margin: 50px 0;}
+	</style>
+</head>
+<body>
+<!-- 	<form>
+		Day Pass Price <input name="dayPassPrice" value="100">
+		Seasons Pass Price<input name="seasonsPassPrice" value="1200">
+	</form> -->
+  <div class="container">
+    <table id="passes" border=1 style="border-collapse: collapse;">
+    </table>
+  </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+
+  	<script>
+  		$(document).ready(function() {
+  				const totalDays = 20;
+  		    const venues = [
+    		    {
+    		    	name: "Sunshine Adult Pass ($1200)",
+    		    	dayPrice: 109,
+    		    	seasonsPass: 1200,
+              type: "resort"
+    		    },
+            {
+              name: "Sunshine Costco Card (229.99)",
+              dayPrice: 109,
+              discountedDayPrice: 76.63,
+              seasonsPass: 1200,
+              type: "costco"
+            },
+            {
+              name: "Sunshine Card ($99)",
+              dayPrice: 109,
+              discountedWeekDayPrice: Number(109 - 25),
+              discountedWeekEndPrice: Number(109 - 15),
+              seasonsPass: 1200,
+              cardPrice: 99,
+              freeDays: [1, 4, 7],
+              type: "venueCard"
+            }
+          ];
+
+          const calculateResortSeasonsPassPrices = (venue, days) => {
+            return _.map(_.range(days), day => {
+              return {
+                price: (venue.seasonsPass / (day+1)).toFixed(2),
+                isBetterValue: venue.dayPrice > (venue.seasonsPass / (day+1)).toFixed(2),
+                totalSpent: venue.seasonsPass
+              }
+            });
+          }
+
+          const calculateCostoCardPrices = (venue, days) => {
+            return _.map(_.range(days), day => {
+              return {
+                price: venue.dayPrice,
+                isBetterValue: Number(day+1) * venue.dayPrice < venue.seasonsPass,
+                totalSpent: venue.dayPrice * Number(day+1)
+              }
+            });
+          }
+
+          const calculateVenueCardPrices = (venue, days) => {
+            let totalSpend = venue.cardPrice;
+            return _.map(_.range(days), (day, i) => {
+              const isFreeDay = _.includes(venue.freeDays, Number(i+1))
+              
+              return {
+                isFreeDay,
+                price: isFreeDay ? 0 : venue.discountedWeekEndPrice,
+                isBetterValue: venue.discountedWeekEndPrice < (venue.seasonsPass / (day+1)).toFixed(2),
+                totalSpent: totalSpend += Number(isFreeDay ? 0 : venue.discountedWeekEndPrice)
+              }
+            });
+          }
+
+          // ------------------------ 
+          // Add Table headers
+          // ------------------------
+
+          $('#passes').append(`
+            <tr>
+              <th>Venue</th>
+              <th>Seasons Pass Price</th>
+              <th>Day Rate</th>
+              ${_.times(totalDays, i => `<th>${i+1}</th>`)}
+            </tr>`);
+
+          // ------------------------ 
+          // Calculate pass prices
+          // ------------------------
+
+
+  		    _.map(venues, venue => {
+
+              let prices;
+              
+              switch (venue.type) {
+                case "resort":
+                  prices = calculateResortSeasonsPassPrices(venue, totalDays);
+                  break;
+                case "costco":
+                  prices = calculateCostoCardPrices(venue, totalDays);
+                  break;
+                case "venueCard":
+                  prices = calculateVenueCardPrices(venue, totalDays);
+                  break;
+              }
+
+    		    	$('#passes tr:last').after(`
+    		    		<tr>
+    		    			<td>${venue.name}</td>
+                  <td>${venue.seasonsPass}</td>
+                  <td>${venue.dayPrice}</td>
+    		    			${_.map(prices, (price, i) => {
+                    return `
+                      <td>
+                        <span class="price">Better Than SP - ${price.isBetterValue ? "Yes" : "No"}</span> 
+                        <br>$/Pass: $${price.price}
+                        <br>Total Spend: $${price.totalSpent}
+                        ${venue.type === "venueCard" ? `<br>${price.isFreeDay ? "Free Day" : '&nbsp;'}` : ''}
+                      </td>`
+                  })}
+    		    		</tr>`
+    		    	);
+            
+            // else {
+            //   $('#passes tr:last').after(`
+            //     <tr>
+            //       <td>${venue.name}</td>
+            //       <td>${venue.seasonsPass}</td>
+            //       <td>${venue.discountedDayPrice}</td>
+            //       ${costoCardPrices(venue)}
+            //     </tr>`
+            //   );
+            // }
+        })
+
+  		});
+  </script>
+</body>
+</html>
