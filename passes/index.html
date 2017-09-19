@@ -96,7 +96,7 @@
               discountedWeekEndPrice: Number(109 / 2),
               seasonsPass: 1365,
               cardPrice: 576.06,
-              freeDays: [1, 2,3, 4],
+              freeDays: [1, 2,3, 4,5,6],
               type: "mountainCollective"
             }
           ];
@@ -243,8 +243,7 @@
     		    			${_.map(venue.prices, (price, i) => {
                     return `
                       <td class=${_.includes(venue.cheapestDays, i) ? "cheapest" : ""}>
-                        <span class="price">Better Than ${venue.type === "resort" ? "DP" : "SP"} - ${price.isBetterValue ? "Yes" : "No"}</span> 
-                        <br>$/Pass: $${price.price}
+                        $/Pass: $${price.price}
                         <br>Total Spend: $${price.totalSpent}
                         ${venue.type === "venueCard" ? `<br>${price.isFreeDay ? "Free Day" : '&nbsp;'}` : ''}
                       </td>`
