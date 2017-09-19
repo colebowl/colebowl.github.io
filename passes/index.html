@@ -14,6 +14,7 @@
     th {text-align: center;}
 
     .container { overflow: auto; max-width: 100%; margin: 50px 0;}
+    .cheapest {background: green}
 	</style>
 </head>
 <body>
@@ -36,30 +37,35 @@
   		$(document).ready(function() {
   				const totalDays = 20;
   		    const venues = [
+            // {
+            //   name: "Early Season Sunshine Adult Pass ($998)",
+            //   dayPrice: 109,
+            //   seasonsPass: 998,
+            //   type: "resort"
+            // },
+            // {
+            //   name: "Early Season  Sunshine Costco Card (229.99)",
+            //   dayPrice: 109,
+            //   discountedDayPrice: 76.63,
+            //   seasonsPass: 998,
+            //   type: "costco"
+            // },
+            // {
+            //   name: "Early Season Sunshine Card ($99)",
+            //   dayPrice: 109,
+            //   discountedWeekDayPrice: Number(109 - 25),
+            //   discountedWeekEndPrice: Number(109 - 15),
+            //   seasonsPass: 998,
+            //   cardPrice: 99,
+            //   freeDays: [1, 4, 7],
+            //   type: "venueCard"
+            // },
             {
-              name: "Early Season Sunshine Adult Pass ($998)",
+              name: "Sunshine Day Passes ($109)",
               dayPrice: 109,
-              seasonsPass: 998,
-              type: "resort"
+              seasonsPass: 1365,
+              type: "resortDayPass"
             },
-            {
-              name: "Early Season  Sunshine Costco Card (229.99)",
-              dayPrice: 109,
-              discountedDayPrice: 76.63,
-              seasonsPass: 998,
-              type: "costco"
-            },
-            {
-              name: "Early Season Sunshine Card ($99)",
-              dayPrice: 109,
-              discountedWeekDayPrice: Number(109 - 25),
-              discountedWeekEndPrice: Number(109 - 15),
-              seasonsPass: 998,
-              cardPrice: 99,
-              freeDays: [1, 4, 7],
-              type: "venueCard"
-            },
-
     		    {
     		    	name: "Sunshine Adult Pass ($1200)",
     		    	dayPrice: 109,
@@ -82,6 +88,16 @@
               cardPrice: 99,
               freeDays: [1, 4, 7],
               type: "venueCard"
+            },
+            {
+              name: "Mountain Collective ($99)",
+              dayPrice: 109,
+              discountedWeekDayPrice: Number(109 / 2),
+              discountedWeekEndPrice: Number(109 / 2),
+              seasonsPass: 1365,
+              cardPrice: 576.06,
+              freeDays: [1, 2,3, 4],
+              type: "mountainCollective"
             }
           ];
 
@@ -91,6 +107,16 @@
                 price: venue.dayPrice,
                 isBetterValue: venue.dayPrice > (venue.seasonsPass / (day+1)).toFixed(2),
                 totalSpent: venue.seasonsPass
+              }
+            });
+          }
+
+          const calculateResortDayPassPrices = (venue, days) => {
+            return _.map(_.range(days), (day, i) => {
+              return {
+                price: venue.dayPrice,
+                isBetterValue: venue.dayPrice > (venue.seasonsPass / (day+1)).toFixed(2),
+                totalSpent: venue.dayPrice * Number(i+1)
               }
             });
           }
@@ -107,9 +133,10 @@
 
           const calculateVenueCardPrices = (venue, days) => {
             let totalSpend = venue.cardPrice;
+
             return _.map(_.range(days), (day, i) => {
               const isFreeDay = _.includes(venue.freeDays, Number(i+1))
-              
+
               return {
                 isFreeDay,
                 price: isFreeDay ? 0 : venue.discountedWeekEndPrice,
@@ -118,6 +145,21 @@
               }
             });
           }
+
+          const calculateMountainCollectivePrices = (venue, days) => {
+            let totalSpend = venue.cardPrice;
+            
+            return _.map(_.range(days), (day, i) => {
+              const isFreeDay = _.includes(venue.freeDays, Number(i+1))
+
+              return {
+                isFreeDay,
+                price: isFreeDay ? 0 : venue.discountedWeekEndPrice,
+                isBetterValue: venue.discountedWeekEndPrice < (venue.seasonsPass / (day+1)).toFixed(2),
+                totalSpent: totalSpend += Number(isFreeDay ? 0 : venue.discountedWeekEndPrice)
+              }
+            });
+          }          
 
           // ------------------------ 
           // Add Table headers
@@ -135,12 +177,15 @@
           // Calculate pass prices
           // ------------------------
 
-
+          // let prices; 
   		    _.map(venues, venue => {
 
-              let prices;
+              
               console.log('',venue.type);
               switch (venue.type) {
+                case "resortDayPass":
+                  prices = calculateResortDayPassPrices(venue, totalDays);
+                  break;
                 case "resort":
                   prices = calculateResortSeasonsPassPrices(venue, totalDays);
                   break;
@@ -150,16 +195,54 @@
                 case "venueCard":
                   prices = calculateVenueCardPrices(venue, totalDays);
                   break;
+                case "mountainCollective":
+                  prices = calculateMountainCollectivePrices(venue, totalDays);
+                  break;
               }
 
+              venue.prices = prices;
+              return venue;
+            })
+
+          // console.log("Venuses", venues);
+          // _.map(venues, venue => {
+          // })
+
+          // map through all days
+          // go through venue.prices
+          // get the lowest totalSpent
+          // return something like {day: x, venue: }\
+           // actuaally set something like venue.cheapestdays = [i,i,i]
+
+
+
+          _.times(totalDays, day => {
+            const byDay = _.map(venues, venue => {
+              return { totalSpent: venue.prices[day].totalSpent, venue: venue.name }
+            })
+            // console.log(byDay);
+            const lowest = _.reduce(byDay, function(prev, curr) {
+                return prev.totalSpent < curr.totalSpent ? prev : curr;
+            });
+            console.log(lowest);
+            const venueKey = _.findKey(venues, { name: lowest.venue });
+            console.log(venueKey);
+            if (!venues[venueKey].cheapestDays) venues[venueKey].cheapestDays = [] ;
+            venues[venueKey].cheapestDays.push(day) 
+
+          })
+
+          // console.log(venues);
+          _.map(venues, venue => {
+              console.log(venue.cheapestDays);
     		    	$('#passes tr:last').after(`
     		    		<tr>
     		    			<td>${venue.name}</td>
                   <td>${venue.seasonsPass}</td>
                   <td>${venue.dayPrice}</td>
-    		    			${_.map(prices, (price, i) => {
+    		    			${_.map(venue.prices, (price, i) => {
                     return `
-                      <td>
+                      <td class=${_.includes(venue.cheapestDays, i) ? "cheapest" : ""}>
                         <span class="price">Better Than ${venue.type === "resort" ? "DP" : "SP"} - ${price.isBetterValue ? "Yes" : "No"}</span> 
                         <br>$/Pass: $${price.price}
                         <br>Total Spend: $${price.totalSpent}
